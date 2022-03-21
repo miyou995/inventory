@@ -1,0 +1,94 @@
+
+.calendar {
+  width:98%;
+  margin: auto;
+  font-size: 13px;
+  
+}
+
+.calendar tr, .calendar td {
+ 
+}
+
+.calendar th {
+  background-color:#EE7203;
+  font-size: 16px;
+  text-align: center; 
+  border: 1px solid #ccc;
+}
+
+.calendar td  {
+ 
+  
+
+}
+.case {
+  text-align: initial;
+  font-size: 18px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  
+}
+
+.calendar li {
+  background-color:#CCC;
+  text-align: center;
+  font-size: 14px;
+  border: 1px solid #ccc; 
+  
+}
+.calendar ul {
+  width:130px;
+  height: 110px;
+  text-align: center;
+  
+}
+
+.month {
+  font-size: 25px;
+}
+
+.date { 
+  background-color:#EE7203;
+  text-align: center;
+  font-size: 18px;
+  border-right: 1px solid #ccc;
+}
+
+
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.btn {
+  outline: none;
+  color: #ccc;
+  background-color: transparent;
+  border: 1px solid #EE7203;
+} 
+.btn:hover {
+
+  color: #ccc;
+ 
+} 
+
+.clearfix {
+  margin: 15px;
+}
+
+.meet{
+  
+  background-color: transparent;
+  border: 1px solid #CCC;
+}  
+.hello {
+  position:relative; 
+  top:980px;
+  background-color: rgb(104, 104, 34);
+  border: 1px solid #CCC; 
+}  

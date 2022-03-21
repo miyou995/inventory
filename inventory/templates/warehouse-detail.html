@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% block title %}
+<title>Dépots</title>
+{% endblock %}
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+    <div class="content container-fluid">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="page-title bg-white">Dépots</h3>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <!-- Page Content -->
+    <div class="content">
+        <div class="container">
+
+            <!-- Doctor Widget -->
+            <div class="card bg-white">
+                <div class="card-body">
+                    <div class="doctor-widget bg-white">
+                      
+                        <div class="doc-info-left">
+                            
+                            <div class="doc-info-cont">
+                                <h4 class="doc-name badge badge-pill bg-info-light">{{warehouse.name}}</h4>
+                                 <br> 
+                            </div>
+                        </div>
+                        <div class="doc-info-right">
+                            <div class="doc-info-cont">
+                                <h4 class="doc-name badge bg-secondary">{{warehouse.address}} </h4>
+                                    <br>
+                           </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Doctor Widget -->
+            <div class="card bg-white">
+                <div class="card-body pt-0 bg-white">
+                
+                    <!-- Tab Menu -->
+                    <nav class="user-tabs mb-4 bg-white">
+                        <ul class="nav nav-tabs nav-tabs-bottom nav-justified bg-white">
+                            <li class="nav-item bg-white">
+                                <a class="nav-link active" href="#" data-toggle="tab">stock</a>
+                            </li>
+                             
+                        </ul>
+                    </nav>
+                    <!-- /Tab Menu -->
+                    
+                    <div class="row bg-white">
+                        <div class="col-md-12 d-flex bg-white">
+                        
+                            <!-- Recent Orders -->
+                            <div class="card card-table flex-fill bg-white">
+                                <div class="card-header bg-white">
+                                    <h4 class="card-title bg-white">Produits</h4>
+                                </div>
+                                <div class="card-body bg-white">
+                                    <div class="table-responsive">
+                                        <table class="table table-center mb-0 bg-white">
+                                            <thead class=" bg-white">
+                                                <tr>
+                                                    <th>Produit</th>
+                                                    <th>Référence</th>
+                                                    <th>Catégorie</th>
+                                                    <th>Marque</th>
+                                                    <th>Quantité</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                
+                                                {% for warehouseitem in instanceproduit %}
+                                                <tr>
+                                                    <td><a href="{% url 'inventory:productdetail' warehouseitem.pk %}"> {{warehouseitem.product.name}} </a></td>
+                                                    <td><span class="badge badge-pill bg-info-light">{{warehouseitem.product.reference}}</span></td>
+                                                    <td><span class="badge badge-pill bg-info-light">{{warehouseitem.product.category}}</span></td>
+                                                    <td> {{warehouseitem.product.category}} </td>
+                                                    <td><span class="d-block text-info"> {{warehouseitem.quantity}} </span></td>
+                                                </tr>
+                                                {% endfor %} 
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /Recent Orders -->
+                            
+                        </div>
+                       
+                    </div>				 
+                                         
+                                     
+        
+                            
+                           
+
+                </div>
+                         
+                                     
+                                        
+                                         
+    <!-- /Page Content -->
+            </div>			
+        </div>
+        
+    </div>			
+</div>
+<!-- /Page Wrapper -->
+{% endblock content %}

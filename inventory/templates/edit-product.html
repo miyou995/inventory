@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% block title %}
+<title>Produits</title>
+{% endblock %}
+<!-- Main Wrapper -->
+<div class="main-wrapper">
+<!-- Page Wrapper -->
+<div class="page-wrapper bg-white">
+    <div class="content container-fluid bg-white">
+    
+        <!-- Page Header -->
+        <div class="page-header bg-white">
+            <div class="row bg-white">
+                <div class="col-sm-12 bg-white">
+                    <h3 class="page-title  bg-white">Produits</h3>
+                </div>
+            </div>
+        </div> 
+        <div class="row">
+            <div class="col-sm-12">
+                    <!-- Project Settings Form -->
+                    <form action="{% url 'inventory:editproduct' product.pk %}" method="post">
+                        {% csrf_token %}
+                        <div class="row form-row">
+                            <div class="col-12 col-md-12">
+                                <div class="form-group">
+                                   
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group ">
+                                    <label for="id_name">Nom:</label>
+                                    <input type="text" name="name"  id="id_name"  required="" class="form-control bg-white" value="{{product.name}}">
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="id_upc">Code article:</label>
+                                    <div >
+                                        <input type="text" name="upc"  id="id_upc" required="" class="form-control bg-white" maxlength="200" value="{{product.upc}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="id_annual_revenue">URL:</label>
+                                    <div>
+                                        <input type="text" name="slug" class="form-control bg-white" maxlength="150" required="" id="id_slug" value="{{product.slug}}">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="id_email">Référence / code a bar:</label>
+                                    <div>
+                                        <input type="text" name="reference" class="form-control bg-white" maxlength="200" id="id_reference" value="{{product.reference}}">
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group bg-white">
+                                <label for="id_category">Marque : </label>
+                                    <select class="form-control bg-white"  name="brand" id="id_brand" value="{{product.brand}}" > 
+                                        {% for brand in brands %}
+                                            <option value=""selected="">{{product.brand}}</option>
+                                            <option value="{{brand.id}}">{{brand.name}}</option>
+                                        {% endfor %}													
+                                    </select>	
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group bg-white">
+                                <label for="id_brand">Catégorie : </label>
+                                    <select class="form-control bg-white"  name="category" id="id_category" value="{{product.category}}" > 
+                                        {% for category in categorys %}
+                                             <option value=""selected="">{{product.category}}</option>
+                                            <option value="{{category.id}}">{{category.name}}</option>
+                                        {% endfor %}													
+                                    </select>	
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="id_email">Référence / code a bar:</label>
+                                <div>
+                                    <input type="text" name="reference" class="form-control bg-white" maxlength="200" id="id_reference" value="{{product.reference}}" >
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label class="required" for="id_price">Price:</label>
+                                <div>
+                                    <input type="number" name="price" value="0" step="1" required="" id="id_price" class="form-control bg-white" value="{{product.price}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label class="required" for="id_old_price">Ancien prix:</label>
+                                <div>
+                                    <input type="number" name="old_price" value="0" step="1" required="" id="id_old_price" class="form-control bg-white" value="{{product.old_price}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="id_buy_price">Prix d'achat:</label>
+                                <div>
+                                    <input type="number" name="buy_price"  step="1" required="" id="id_buy_price" class="form-control bg-white" value="{{product.buy_price}}">
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <div>
+                                    <input type="checkbox" name="actif" id="id_actif" checked="" class=" bg-white" value="{{product.actif}}">
+                                    <label  for="id_actif">Actif </label> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <div>
+                                    <input type="checkbox" name="new" id="id_new" class=" bg-white" value="{{product.new}}">
+                                    <label  for="id_new">Nouveau </label> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="id_text">Petit text :</label>
+                                <div>
+                                    <textarea name="text" cols="40" rows="10" class="form-control bg-white" id="id_text" value="{{product.text}}"></textarea>
+                                </div>
+                            </div>
+                        </div>  
+                                                                     
+                        </div>           
+                        <br>  <br>
+                        <div> 
+                             <input type="submit" value="Save" class="btnn" name="_save">
+                        </div>
+                        <br>  <br>
+                    </form>
+                    <!-- /Poject Settings Form -->
+                  
+            </div>			
+        </div>
+        
+    </div>			
+</div>
+<br>
+<!-- /Page Wrapper -->
+
+</div>
+
+<!-- /Main Wrapper -->
+{% endblock content %}

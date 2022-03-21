@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% block title %}
+<title>Produits</title>
+{% endblock %}
+<!-- Main Wrapper -->
+<div class="main-wrapper">
+<!-- Page Wrapper -->
+<div class="page-wrapper">
+    <div class="content container-fluid">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="page-title bg-white">Produits</h3>
+                    
+                </div>
+            </div>
+        </div>
+        
+        <!-- /Page Header -->
+        <div class="row bg-white">
+            <div class="container bg-white">
+                
+                <!-- Doctor Widget -->
+                <div class="card bg-white">
+                    <div class="card-body bg-white">
+    
+                        <div class="doctor-widget">
+                            <div class="doc-info-left">
+                            
+                                <div class="doc-info-cont">
+                                    <h4 class="doc-name badge badge-pill bg-info-light">{{product.name}}</h4>
+                                    <br>
+                                    <p >code article : {{product.upc}}</p>
+                                    <p >Référence / code a bar : {{product.reference}}</p>
+                                    <p >Catégorie  : {{product.category}}</p>
+                                    <p >Marque : {{product.brand}}</p>
+                                    
+                                   
+                                </div>
+                            </div>
+                            <div class="doc-info-right">
+                                <div class="clini-infos">
+                                    <p >actif :  {{product.actif}}</p>
+                                    <p >Nouveau : {{product.new}}</p>
+                                    <p >Prix : {{product.price}}</p>
+                                    <p >Ancien prix : {{product.old_price}}</p>
+                                    <p >Prix d'achat : {{product.buy_price}}</p>
+                                     
+                            </div>
+                        </div>
+                   
+                    </div>
+                </div>
+                
+                <!-- /Doctor Widget -->	
+                <!-- Doctor Details Tab -->
+            <div class="card bg-white">
+                <div class="card-body pt-0 bg-white">
+                    <!-- Tab Menu -->
+                    <nav class="user-tabs mb-4 bg-white">
+                        <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#doc_overview" data-toggle="tab">Récapitulatif</a>
+                            </li>
+                            
+                        </ul>
+                </nav>
+                <!-- /Tab Menu -->
+                
+                <!-- Tab Content -->
+                <div class="tab-content pt-0">
+                    <!-- Overview Content -->
+                    <div role="tabpanel" id="doc_overview" class="tab-pane fade show active">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-9">
+                            
+                                <!-- About Details -->
+                                <div class="widget about-widget">
+                                    <h4 class="widget-title">Descriptions</h4>
+                                    <p>{{product.text}} </p>
+                                </div>
+                                <!-- /About Details -->
+                            </div>
+                            
+                        </div>
+                        <div class="row bg-white">
+                            <div class="col-md-12 d-flex bg-white">
+                            
+                                <!-- Recent Orders -->
+                                <div class="card card-table flex-fill bg-white">
+                                    <div class="card-header bg-white">
+                                        <h4 class="card-title bg-white">Dépots</h4>
+                                    </div>
+                                    <div class="card-body bg-white">
+                                        <div class="table-responsive">
+                                            <table class="table table-center mb-0 bg-white">
+                                                <thead class=" bg-white">
+                                                    <tr>
+                                                        <th>Dépots</th>
+                                                        <th>Address</th>
+                                                        <th>Quantité</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    
+                                                    {% for warehouseitem in instanceproduit  %}
+                                                    <tr>
+                                                        <td><a href="{% url 'inventory:warehousedetail' warehouseitem.pk %}"> {{warehouseitem.location.name}} </a></td>
+                                                        <td><span class="badge badge-pill bg-info-light">{{warehouseitem.location.address}}</span></td>
+                                                        <td><span class="badge badge-pill bg-info-light">{{warehouseitem.quantity}}</span></td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                    {% comment %} {% for warehouseitem in instanceproduit %}
+                                                    <tr>
+                                                        <td><a href="{% url 'inventory:productdetail' warehouseitem.pk %}"> {{product.location.name}} </a></td>
+                                                        <td><span class="badge badge-pill bg-info-light">{{product.location.address}}</span></td>
+                                                        <td><span class="badge badge-pill bg-info-light">{{product.warehouseitem.quantity}}</span></td>
+                                                    </tr>
+                                                    {% endfor %}  {% endcomment %}
+                                                    {% comment %} {% for warehouseitem in warehouseitems %}
+                                                    <tr>
+                                                        <td><a  href="{% url 'inventory:warehousedetail' warehouseitem.pk %}"> {{warehouseitem.location.name}} </a></td>
+                                                        <td><span class="badge badge-pill bg-info-light">{{warehouseitem.location.address}}</span></td>
+                                                        <td><span class="d-block text-info"> {{warehouseitem.quantity}} </span></td>
+                                                    </tr>
+                                                    {% endfor %}  {% endcomment %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /Recent Orders -->
+                                
+                            </div>
+                    </div>
+                </div>
+        
+</div>
+<!-- /Page Wrapper -->
+
+</div>
+<!-- /Main Wrapper -->
+{% endblock content %}

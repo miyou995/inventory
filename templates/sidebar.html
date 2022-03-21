@@ -1,0 +1,56 @@
+{% load static %}
+<!-- Sidebar -->
+<div class="sidebar bg-black " id="sidebar">
+    <div class="sidebar-inner slimscroll">
+        <div id="sidebar-menu" class="sidebar-menu">
+            <ul>
+                <br> 
+                
+                <br> 
+                <li > 
+                    <a href="/"><i class="fe fe-home  bg-blackk"></i> <span class=" bg-blackk">Dashboard</span></a>
+                </li>
+                <li class="submenu">
+                    <a href="contact.html"><i class="fa fa-address-book-o bg-blackk" ></i> <span class=" bg-blackk"> Produits</span> <span class="menu-arrow bg-blackk"></span></a>
+                    <ul style="display: none;">
+                        <li><a href="{% url 'inventory:productlist' %}" >Liste des produits</a></li>
+                        <li><a href="{% url 'inventory:addcategory' %}" >Ajout des catégories</a></li>
+                        <li><a href="{% url 'inventory:addbrand' %}" >Ajout des marques</a></li>
+                        <li><a href="{% url 'inventory:addproduct' %}" >Ajout des produits</a></li>
+                    </ul>
+                </li>	
+                <li class="submenu">
+                    <a href="contact.html"><i class="fa fa-address-book-o bg-blackk" ></i> <span class=" bg-blackk"> Dépots</span> <span class="menu-arrow bg-blackk"></span></a>
+                    <ul style="display: none;">
+                        <li><a href="{% url 'inventory:warehouselist' %}" >Liste des dépots</a></li>
+                        <li><a href="{% url 'inventory:addwarehouse' %}" >Ajout de dépots</a></li>
+                        <li><a href="{% url 'inventory:addwarehouseitem' %}" >Ajout produits dépots</a></li>
+                    </ul>
+                </li>		
+                <li class="submenu">
+                    <a href="contact.html"><i class="fa fa-address-book-o bg-blackk" ></i> <span class=" bg-blackk"> Commandes</span> <span class="menu-arrow bg-blackk"></span></a>
+                    <ul style="display: none;">
+                        <li><a href="" >Liste des Commandes</a></li>
+                        <li><a href="{% url 'order:addwilaya' %}" >Ajout de wilaya</a></li>
+                        <li><a href="{% url 'order:addcommune' %}"  >Ajout des Communes</a></li>
+                        <li><a href="{% url 'order:addwarehouseorder' %}" >Ajout de Commandes dépots</a></li>
+                        <li><a href="" >Ajout produits Commandes dépots</a></li>
+                    </ul>
+                </li>						
+                <li> 
+                    <a href="#"><i class="fa fa-user-circle-o bg-blackk"></i> <span  class="bg-blackk"> {{ user.get_username }}</span></a>
+                </li> 
+                <li> 
+                    <a href="{% url 'accounts:logout' %}"><i class="fa fa-power-off bg-blackk"></i> <span  class="bg-blackk">LogOut</span></a>
+                </li> 
+                <li>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="darkSwitch" checked>
+                        <label class="custom-control-label " for="darkSwitch">Dark Mode</label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- /Sidebar -->

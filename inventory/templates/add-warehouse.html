@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% block title %}
+<title>Dépot</title>
+{% endblock %}
+<!-- Main Wrapper -->
+<div class="main-wrapper">
+<!-- Page Wrapper -->
+<div class="page-wrapper bg-white">
+    <div class="content container-fluid bg-white">
+    
+        <!-- Page Header -->
+        <div class="page-header bg-white">
+            <div class="row bg-white">
+                <div class="col-sm-12 bg-white">
+                    <h3 class="page-title  bg-white">Dépots</h3>
+                </div>
+            </div>
+        </div> 
+        <div class="row">
+            <div class="col-sm-12">
+                    <!-- Project Settings Form -->
+                    <form action="{% url 'inventory:addwarehouse' %}" method="post">
+                        {% csrf_token %}
+                        <div class="row form-row">
+                            <div class="col-12 col-md-12">
+                                <div class="form-group">
+                                   
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group ">
+                                    <label for="id_name">Nom:</label>
+                                    <input type="text" name="name"  id="id_name"  required="" class="form-control bg-white">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 col-md-6">
+                            <div class="form-group ">
+                                <label for="id_address">Adresse:</label>
+                                <input type="text" name="address"  id="id_address"  required="" class="form-control bg-white">
+                            </div>
+                        </div>
+                        
+                                                       
+                        </div>           
+                        <br>  <br>
+                        <div> 
+                             <input type="submit" value="Save" class="btnn" name="_save">
+                        </div>
+                        <br>  <br>
+                    </form>
+                    <!-- /Poject Settings Form -->
+                  
+            </div>			
+        </div>
+        
+    </div>			
+</div>
+<br>
+<!-- /Page Wrapper -->
+
+</div>
+
+<!-- /Main Wrapper -->
+{% endblock content %}
