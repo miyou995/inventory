@@ -39,7 +39,6 @@ class AddBrandView(CreateView):
     def form_invalid(self, form):
         pprint(form.errors)
         return super().form_invalid(form)
-
 class AddCategoryView(CreateView):
     template_name= "add-category.html"
     form_class= AddCategoryForm
@@ -58,6 +57,8 @@ class AddProductView(CreateView):
     form_class= AddProductForm
     model = Product 
     success_url = reverse_lazy('inventory:productlist')
+
+
     def form_invalid(self, form):
         pprint(form.errors)
         return super().form_invalid(form)

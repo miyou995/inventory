@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'order',
     'accounts',
     'inventory',
+    'location',
 # third party
     'mptt',
     "django_mptt_admin",
@@ -75,6 +76,10 @@ MIDDLEWARE = [
 
 ]
 
+GRAPH_MODELS = {
+'all_applications': False,
+  'app_labels': ["core", "inventory", "order"],
+}
 ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
@@ -160,7 +165,7 @@ LOGGING ={
 
 AUTH_USER_MODEL = 'accounts.User'
 
-LANGUAGE_CODE = "fr-fr"
+LANGUAGE_CODE = "en"
 
 TIME_ZONE = "Africa/Algiers"
 

@@ -10,7 +10,7 @@ class UserAdmin(DjangoUserAdmin):
         (None, {"fields": ("email", "password")}),
         (
                 "Personal info",
-                {"fields": ("first_name", "last_name")},
+                {"fields": ("first_name", "last_name", "warehouse")},
         ),
         (
                 "Permissions",
@@ -18,6 +18,7 @@ class UserAdmin(DjangoUserAdmin):
                   "fields":(
                             "is_active",
                             "is_staff",
+                            "is_manager",
                             "is_superuser",
                             "groups",
                             "user_permissions",
@@ -40,6 +41,7 @@ class UserAdmin(DjangoUserAdmin):
                 )
     list_display = (
                 "email",
+                "warehouse",
                 "first_name",
                 "last_name",
                 "is_staff",

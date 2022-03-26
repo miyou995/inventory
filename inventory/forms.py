@@ -6,7 +6,7 @@ from .models import Product, Brand, Category, WareHouseItem, WareHouse
 class AddProductForm(ModelForm) :
     class Meta: 
         model = Product 
-        fields = '__all__' 
+        fields = ('name','upc','reference','category','brand','text','price','old_price','buy_price','actif','new',) 
         
 class AddBrandForm(ModelForm) :
     class Meta: 

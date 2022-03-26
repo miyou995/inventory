@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.http import HttpResponse
 from django.urls import reverse
 from django.utils.safestring import mark_safe
-from .models import Wilaya, Commune, WareHouseOrder, WareHouseOrderItem, ClientOrder, ClientOrderItem, Supplier, SupplyOrder, SupplyOrderItem
+from .models import WareHouseOrder, WareHouseOrderItem, ClientOrder, ClientOrderItem, Supplier, SupplyOrder, SupplyOrderItem
 import csv
 import datetime
 from import_export.admin import ImportExportModelAdmin, ExportMixin
@@ -48,14 +48,14 @@ class WareHouseOrderItemInline(admin.TabularInline):
     model           = WareHouseOrderItem
     raw_id_fields   = ['warehouse_item']
 
-@admin.display()
-def total_da(obj):
-    return ("%s" % obj.get_total_cost())
+# @admin.display()
+# def total_da(obj):
+#     return ("%s" % obj.get_total_cost())
 
 
 @admin.register(WareHouseOrder)
 class WareHouseOrderAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['id', 'created' ,'updated' ,total_da,'order_type', order_detail, order_pdf]
+    list_display = ['id', 'created' ,'updated' ,'order_type']
     list_display_links =('id', )
     list_filter = ['order_type','created' ]
     list_editable = ['order_type']
@@ -64,17 +64,4 @@ class WareHouseOrderAdmin(ExportMixin, admin.ModelAdmin):
     inlines = [WareHouseOrderItemInline] 
     list_per_page = 30
 
-
-@admin.register(Wilaya)
-class WilayaAdmin(ImportExportModelAdmin):
-    list_display = ['id', 'name','relai_delivery' ,'home_delivery','active']
-    list_display_links =('id',)
-    list_filter = ['active']
-    list_editable = ['name', 'relai_delivery','home_delivery']
-    list_per_page = 30
-
-
-@admin.register(Commune)
-class CommuneAdmin(ImportExportModelAdmin):
-    list_display = ('name','wilaya_id')
 

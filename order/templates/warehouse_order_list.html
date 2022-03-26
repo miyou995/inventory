@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% block title %}
+<title>Produit</title>
+{% endblock %}
+<!-- Main Wrapper -->
+<div class="main-wrapper">
+    <div class="page-wrapper">
+        <div class="content container-fluid">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3 class="page-title  bg-white">Produits</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row bg-white">
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card">
+                    <div class="card-body bg-white">
+                        <div class="dash-widget-header">
+                            <span class="dash-widget-icon text-primary border-primary">
+                                <i class="fe fe-folder"></i>
+                            </span>
+                            <div class="dash-count">
+                                <h3> {{ orders.count }} </h3>
+                            </div>
+                        </div>
+                        <div class="dash-widget-info">
+                            <h6 class="text-muted">Total</h6>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-primary w-50"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 bg-white">
+            <div class="tab-content bg-white">	
+                <div id="pat_appointments" class="tab-pane fade show active bg-white">
+                    <div class="card card-table mb-0 bg-white">
+                        <div class="card-body bg-white">
+                            <div class="table-responsive bg-white">
+                                <table class="table table-center mb-0 bg-white">
+                                    <thead class="bg-white">
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Référence</th>
+                                            <th>Catégorie</th>
+                                            <th>Marque</th>
+                                            <th>Prix</th>
+                                            <th>Ancien prix</th>
+                                            <th>Prix d'achat</th> 
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for product in orders %}
+                                        <tr>
+                                            <td><a href="{% url 'inventory:productdetail' product.pk %}"> {{product.name}} </a></td>
+                                            <td > {{product.reference}} </td>
+                                            <td > {{product.category}} </td>
+                                            <td><span class="badge badge-pill bg-success-light">{{product.brand}}</span></td>
+                                            <td > {{product.price}} </td>
+                                            <td > {{product.old_price}} </td>
+                                            <td > {{product.buy_price}} </td>
+                                            <td class="d-block text-info"> {{product.actif}} </td>
+                                            <td class="text-right">
+                                                <div class="table-action">
+                                                    <a href="{% url 'inventory:editproduct' product.pk %}" class="btn btn-sm ">
+                                                            Modifier
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Appointment Tab -->
+            </div>
+        </div>			
+    </div>
+    <br>
+    <!-- /Page Wrapper -->
+
+</div>
+<!-- /Main Wrapper -->
+{% endblock content %}

@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% block title %}
+<title>Produits</title>
+{% endblock %}
+
+<!-- Main Wrapper -->
+<div class="main-wrapper">
+<!-- Page Wrapper -->
+<div class="page-wrapper ">
+    <div class="content container-fluid bg-white">
+    
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row">
+            <div class="col">
+                <h3 class="page-title">commande interne</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Creation de commande interne</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /Page Header -->
+    <div class="row">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert {{message.tags}} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                
+                <div class="card-body">
+                    <h4 class="card-title">Commande interne</h4>
+                    <form action="{% url 'order:create_internal_order' %}" method="POST" >
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-xl-12"  id="forms-list">
+                                <div class="form-group row">
+                                    <div class="col-lg-6">
+                                        <label class="col-lg-3 col-form-label">Recepteur</label>
+                                        <select name="receiver" class="form-control">
+                                            <option>Selectionner un recepteur</option>
+                                            {% for receiver in receivers %}
+                                            <option  value="{{receiver.id}}">{{receiver.warehouse}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                {% comment %} <h3>Ingredients</h3> {% endcomment %}
+                                <div id="form-container" class="">
+                                    {{ formset.management_form }}
+                                    {% for form in formset %}
+                                    {% comment %} {{form.as_p}} {% endcomment %}
+                                    <div class="item-form row">
+                                        <div class="col-4">
+                                            <label for="id_items-{{forloop.counter0}}-warehouse_item" class="col-lg-3 col-form-label">Product&nbsp;:</label>
+                                            <select name="items-{{forloop.counter0}}-warehouse_item" class="form-control" id="id_items-{{forloop.counter0}}-warehouse_item" required>
+                                                <option>Selectionner un Produit</option>
+                                                {% for product in products %}
+                                                <option value="{{product.id}}">{{product}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="quantity col-4">
+                                            <label for="id_items-{{forloop.counter0}}-quantity" class="col-lg-3 col-form-label">Quantity&nbsp;:</label>
+                                            <input type="number" name="items-{{forloop.counter0}}-quantity"class="form-control" id="id_items-{{forloop.counter0}}-quantity">
+                                        </div>
+                                        <div class=" col-4" >
+                                            <label for="id_items-{{forloop.counter0}}-DELETE" class="col-lg-3 col-form-label">Supprimer&nbsp;:</label>
+                                            <input type="checkbox" name="items-{{forloop.counter0}}-DELETE"class="form-control" id="id_items-{{forloop.counter0}}-DELETE">
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                
+                            </div>
+                            <div class="card-header">
+                                <button id="add-form" type="button">Add Another Bird</button>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /Main Wrapper -->
+{% endblock content %}
+
+{% block extrasj %}
+<script>
+    var itemForm = document.querySelectorAll(".item-form")
+    var container = document.querySelector("#form-container") 
+    let addButton = document.querySelector("#add-form")
+    var totalForms = document.querySelector("#id_items-TOTAL_FORMS")
+
+    let formNum = itemForm.length-1
+    addButton.addEventListener('click', addForm)
+
+    function addForm(e){
+        e.preventDefault()
+        let newForm = itemForm[0].cloneNode(true)
+        let formRegex = RegExp(`items-(\\d){1}-`,'g')
+        formNum++
+        newForm.innerHTML = newForm.innerHTML.replace(formRegex, `items-${formNum}-`)
+        container.append(newForm) 
+        totalForms.setAttribute('value', `${formNum+1}`)
+    }
+   
+</script>
+{% endblock extrasj %}

@@ -9,7 +9,6 @@
 <!-- Page Wrapper -->
 <div class="page-wrapper bg-white">
     <div class="content container-fluid bg-white">
-    
         <!-- Page Header -->
         <div class="page-header bg-white">
             <div class="row bg-white">
@@ -45,15 +44,6 @@
                             </div>
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
-                                    <label for="id_annual_revenue">URL:</label>
-                                    <div>
-                                        <input type="text" name="slug" class="form-control bg-white" maxlength="150" required="" id="id_slug">
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                <div class="form-group">
                                     <label for="id_email">Référence / code a bar:</label>
                                     <div>
                                         <input type="text" name="reference" class="form-control bg-white" maxlength="200" id="id_reference">
@@ -64,8 +54,8 @@
                             <div class="form-group bg-white">
                                 <label for="id_category">Marque : </label>
                                     <select class="form-control bg-white"  name="brand" id="id_brand"> 
-                                        {% for product in products %}
-                                            <option value="{{product.id}}">{{product.name}}</option>
+                                        {% for brand in brands %}
+                                            <option value="{{brands.id}}">{{brand.name}}</option>
                                         {% endfor %}													
                                     </select>	
                             </div>

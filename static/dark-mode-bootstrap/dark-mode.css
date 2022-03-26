@@ -32,18 +32,14 @@
 }  */
 
 [data-theme="dark"] .bg-white {
-  background-color: #111b39 !important;
-  color: #ccc;
+  color: rgb(0, 0, 0);
 }
 .bg-white:hover { 
-  background-color: #111b39 !important;
-  color: #ccc;
+  color: rgb(0, 0, 0);
 }
 [data-theme="dark"] .bg-whitee {
-  background-color: #111b39 !important;
-  color: #ccc;
+  color: rgb(0, 0, 0);
 }
 .bg-whitee:hover {
-  background-color: #884DA7 !important;
-  color: #ccc;
+  color: rgb(0, 0, 0);
 }

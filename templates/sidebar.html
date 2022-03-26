@@ -30,11 +30,12 @@
                 <li class="submenu">
                     <a href="contact.html"><i class="fa fa-address-book-o bg-blackk" ></i> <span class=" bg-blackk"> Commandes</span> <span class="menu-arrow bg-blackk"></span></a>
                     <ul style="display: none;">
-                        <li><a href="" >Liste des Commandes</a></li>
+                        <li><a href="{% url 'order:warehouse_order_list' %}" >Liste des Commandes</a></li>
                         <li><a href="{% url 'order:addwilaya' %}" >Ajout de wilaya</a></li>
                         <li><a href="{% url 'order:addcommune' %}"  >Ajout des Communes</a></li>
                         <li><a href="{% url 'order:addwarehouseorder' %}" >Ajout de Commandes dépots</a></li>
                         <li><a href="" >Ajout produits Commandes dépots</a></li>
+                        <li><a href="{% url 'order:create_internal_order' %}" >Ajouter une commande interne</a></li>
                     </ul>
                 </li>						
                 <li> 

@@ -38,6 +38,13 @@ class UserManager(BaseUserManager):
                  "Superuser must have is_superuser=True."
         )
         return self._create_user(email, password, **extra_fields)
+    
+class CustomUserManager(models.Manager):
+
+    def user_warehouses(self):
+        return User.objects.filter(warehouse__isnull=False, is_active=True, is_manager=True)
+
+
 
 class User(AbstractUser):
 
@@ -45,10 +52,12 @@ class User(AbstractUser):
     email   = models.EmailField('email address', unique=True)
     warehouse     =  models.ForeignKey(WareHouse, on_delete=models.SET_NULL, blank=True, null=True)
     is_active = models.BooleanField(default=False)
+    is_manager = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     objects = UserManager()
-
+    custom_objects = CustomUserManager()
     @property
     def is_assistant(self):
         return self.is_active and (self.is_superuser or self.is_staff and self.groups.filter(name="Assistant").exists())
@@ -64,3 +73,6 @@ class User(AbstractUser):
     @property
     def is_content_creator(self):
         return self.is_active and (self.is_superuser or self.is_staff and self.groups.filter(name="Content_creator").exists())
+
+    class Meta:
+        unique_together = ('is_manager', 'warehouse')

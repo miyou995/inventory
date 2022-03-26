@@ -5,6 +5,18 @@ from django_mptt_admin.admin import DjangoMpttAdmin
 from .models import Category, Product, Brand, WareHouse, WareHouseItem
 from import_export import resources
 # Register your models here.
+
+
+class WareHouseItemInline(admin.TabularInline):
+    model = WareHouseItem
+
+class WareHouseAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name',  'commune','actif' ,'is_default')
+    list_display_links = ('id','name' )
+    list_per_page = 40
+    list_editable = [ 'actif','is_default']
+    search_fields = ('name',)
+    inlines = [WareHouseItemInline]
 class BrandAdmin(admin.ModelAdmin):
     list_display = ('id', 'name',  'actif')
     list_display_links = ('id','name' )
@@ -12,7 +24,12 @@ class BrandAdmin(admin.ModelAdmin):
     list_editable = [ 'actif']
     search_fields = ('name',)
 
-
+class WareHouseItemAdmin(admin.ModelAdmin):
+    list_display = ('id', 'product',  'location', 'quantity')
+    list_display_links = ('id','product' )
+    list_per_page = 40
+    # list_editable = [ 'actif']
+    search_fields = ('product', 'location')
 
 class CategoryAdmin(DjangoMpttAdmin):
     # def get_queryset(self, request):
@@ -53,5 +70,5 @@ class ProductAdmin(ImportExportModelAdmin, admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Brand, BrandAdmin)
-admin.site.register(WareHouse)
-admin.site.register(WareHouseItem)
+admin.site.register(WareHouse, WareHouseAdmin)
+admin.site.register(WareHouseItem, WareHouseItemAdmin)

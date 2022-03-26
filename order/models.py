@@ -1,7 +1,8 @@
 from django.db import models
-import core, inventory
+import inventory
 # Create your models here.
 from django.conf import settings
+from location.models import Commune
 
 
 
@@ -16,39 +17,14 @@ SUPPLY_CHOICES = (
     ('BR' ,'Bon de récéption'),
 )
 
+
 ################# DELIVERY  #################
-
-class Wilaya(models.Model):
-    name           = models.CharField(max_length=40, verbose_name="Wilaya", unique=True)
-    relai_delivery = models.DecimalField( max_digits=8, verbose_name="Livraison point de Relais", decimal_places=2, default=0)
-    home_delivery  = models.DecimalField( max_digits=10, verbose_name="Livraison à domicile", decimal_places=2, default=0)
-    active         = models.BooleanField(default=True, verbose_name="Livraison Active")
-    created        = models.DateTimeField(verbose_name='Date de Création', auto_now_add=True)
-    updated        = models.DateTimeField(verbose_name='Date de dernière mise à jour', auto_now=True)
-    class Meta:
-        verbose_name = "Wilaya"
-        verbose_name_plural = "1. Wilayas"
-
-    def __str__(self):
-        return self.name
-
-class Commune(models.Model):
-    wilaya = models.ForeignKey(Wilaya, on_delete=models.CASCADE, verbose_name="Wilaya")
-    name = models.CharField(max_length=30, verbose_name="Commune")
-    # active = models.BooleanField(default=True, verbose_name="Livraison Active")
-    created      = models.DateTimeField(verbose_name='Date de Création', auto_now_add=True)
-    updated      = models.DateTimeField(verbose_name='Date de dernière mise à jour', auto_now=True)
-    class Meta:
-        verbose_name = "Commune"
-        verbose_name_plural = "2. Communes"        
-    def __str__(self):
-        return self.name
         
 
 class WareHouseOrder(models.Model):
-    sender = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="sender", on_delete=models.CASCADE, related_name="set_orders")
+    # sender = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="sender", on_delete=models.CASCADE, related_name="set_orders")
     receiver = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="receiver", on_delete=models.CASCADE, related_name="get_orders")
-    delivery_man = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="livreur", on_delete=models.CASCADE, related_name="internal_orders")
+    delivery_man = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="livreur", on_delete=models.CASCADE, related_name="internal_orders", null=True, blank=True)
     order_type = models.CharField(choices=TYPE_CHOICES,verbose_name="type de commande", max_length=2, null=True, blank=True)
     is_confirmed = models.BooleanField(default=False)
     is_paid = models.BooleanField(default=False)
@@ -64,7 +40,7 @@ class WareHouseOrder(models.Model):
         verbose_name_plural = "WareHouseOrders"
 
     def __str__(self): 
-        return str(self.sender)
+        return str(self.receiver)
 
     def get_absolute_url(self):
         return reverse("order:warehouse_order_detail", kwargs={"pk": self.pk})
@@ -81,7 +57,11 @@ class WareHouseOrderItem(models.Model):
         return self.price * self.quantity
 
     def __str__(self):
-        return str(self.warehouse_item)
+        return str(f"{self.warehouse_item} - {self.warehouse_item.location}")
+
+    @property
+    def get_warehouse(self):
+        return warehouse_item.location
 
     # def get_absolute_url(self):
     #     return reverse("order:warehouse_order_item_detail", kwargs={"pk": self.pk}) 
@@ -91,8 +71,8 @@ class WareHouseOrderItem(models.Model):
 
 
 class ClientOrder(models.Model):
-    sender          = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="sender", on_delete=models.CASCADE, related_name="set_client_orders")
-    delivery_man = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="livreur", on_delete=models.CASCADE, related_name="client_orders")
+    # sender          = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="sender", on_delete=models.CASCADE, related_name="set_client_orders")
+    delivery_man = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="livreur", on_delete=models.CASCADE, related_name="client_orders", null=True, blank=True)
     first_name      = models.CharField(verbose_name="Nom" , max_length=50, null=True, blank=True)
     last_name       = models.CharField(verbose_name="Prenom" , max_length=50, null=True, blank=True)
     address         = models.CharField(verbose_name="Adresse" , max_length=250, null=True, blank=True)
@@ -132,6 +112,9 @@ class ClientOrderItem(models.Model):
     def get_absolute_url(self):
         return reverse("order:client_order_item_detail", kwargs={"pk": self.pk})
 
+    @property
+    def get_warehouse(self):
+        return warehouse_item.location
 
 ################# SUPPLY  #################
 
@@ -182,12 +165,18 @@ class SupplyOrderItem(models.Model):
     order           = models.ForeignKey(SupplyOrder, verbose_name="commande", on_delete=models.CASCADE, related_name="supply_order_items")
     warehouse_item  = models.ForeignKey("inventory.WareHouseItem", verbose_name="produit", on_delete=models.CASCADE)
     quantity        = models.IntegerField(verbose_name="quantité", default=1)
-    is_received = models.BooleanField(default=False)
+    # is_received     = models.BooleanField(default=False)
     price           = models.DecimalField(verbose_name="prix", max_digits=10, decimal_places=2, null=True, blank=True)
-    note  = models.TextField(null=True, blank=True)
-    created      = models.DateTimeField(verbose_name='Date de Création', auto_now_add=True)
-    updated      = models.DateTimeField(verbose_name='Date de dernière mise à jour', auto_now=True)
+    note            = models.TextField(null=True, blank=True)
+    created         = models.DateTimeField(verbose_name='Date de Création', auto_now_add=True)
+    updated         = models.DateTimeField(verbose_name='Date de dernière mise à jour', auto_now=True)
+    
     def get_absolute_url(self):
+        # return reverse("order:client_order_item_detail", args=self.pk)
         return reverse("order:client_order_item_detail", kwargs={"pk": self.pk})
+    
+    @property
+    def get_warehouse(self):
+        return warehouse_item.location
 
 

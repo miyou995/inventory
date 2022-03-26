@@ -22,6 +22,7 @@
 		
 		<!-- Main CSS -->
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/select2.min.css' %}">
 
 	    <!-- Feathericon CSS -->
         <link rel="stylesheet" href="{% static 'plugins/fullcalendar/fullcalendar.min.css' %}">
@@ -82,7 +83,18 @@
          {% comment %} <script src="{% static 'bootstrap-darkmode/tsconfig.json' %}"></script> {% endcomment %}
 
          <script src="{% static 'dark-mode-bootstrap/dark-mode-switch.js' %}"></script>
-        
+         <script src="https://unpkg.com/htmx.org@1.5.0" ></script>
+         <!-- <script type="text/javascript" src="{% static "js/site-base.js" %}"></script> -->
+         <!-- <script type="text/javascript" src="{% static "CACHE/js/awesome.8dd1a2872443.js" %}" charset="utf-8"></script> -->
+         <script>
+             document.body.addEventListener('htmx:configRequest', (event) => {
+                 event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+             })
+             </script>
+             <script src="{% static "js/main.js" %}"></script>
+{% block extrasj %}
+{% endblock extrasj %}
+
     </body>
 
 <!-- Mirrored from dreamguys.co.in/demo/doccure/admin/blank-page.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 30 Nov 2019 04:12:53 GMT -->
