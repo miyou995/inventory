@@ -1,8 +1,4 @@
-from django.shortcuts import render
-
-# Create your views here.
-from itertools import product
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls.base import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.views.generic import ListView, UpdateView, DetailView
@@ -104,8 +100,8 @@ def create_internal_order(request):
                     item.order = new_order
                     item.save()
                 else: 
-                    messages.error(request, form.errors)
-            return reverse_lazy('order:warehouse_order_list')
+                    messages.error(request, item_form.errors)
+            return redirect('order:warehouse_order_list')
             
         else: 
             messages.error(request, order_form.errors)
@@ -126,3 +122,12 @@ class WarehouseOrderListView(ListView):
     model = WareHouseOrder
     template_name = "warehouse_order_list.html"
     context_object_name = "orders"
+
+    def get_queryset(self, obj):
+        if self.request.htmx:
+            start = self.request.GET.get('start_date') 
+            end = self.request.GET.get('end_date') 
+            orders= obj.objects.filter(created__range=[start,end])
+
+        return super().get_queryset()
+    

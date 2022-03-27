@@ -3,6 +3,8 @@ import inventory
 # Create your models here.
 from django.conf import settings
 from location.models import Commune
+import datetime
+
 
 
 
@@ -17,6 +19,9 @@ SUPPLY_CHOICES = (
     ('BR' ,'Bon de récéption'),
 )
 
+class OrderManager(models.Manager):
+    def invoices(self):
+        return WareHouseOrder.objects.filter(order_type="FF")
 
 ################# DELIVERY  #################
         
@@ -26,6 +31,7 @@ class WareHouseOrder(models.Model):
     receiver = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="receiver", on_delete=models.CASCADE, related_name="get_orders")
     delivery_man = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="livreur", on_delete=models.CASCADE, related_name="internal_orders", null=True, blank=True)
     order_type = models.CharField(choices=TYPE_CHOICES,verbose_name="type de commande", max_length=2, null=True, blank=True)
+    number        = models.IntegerField(verbose_name="numéro", null=True, blank=True)
     is_confirmed = models.BooleanField(default=False)
     is_paid = models.BooleanField(default=False)
     is_delivered = models.BooleanField(default=False)
@@ -45,6 +51,21 @@ class WareHouseOrder(models.Model):
     def get_absolute_url(self):
         return reverse("order:warehouse_order_detail", kwargs={"pk": self.pk})
 
+    @property
+    def invoice_num(self):
+        try:
+            last_num = WareHouseOrder.invoices.latest("number")
+            self.number = last_num + 1
+        except:
+            self.number = 1
+        the_num = self.number
+        # the_num = str(self.number).zfill(5)
+        date = datetime.date.today()
+        year = date.strftime("%Y")
+        return f"N°: {the_num}/{year}"
+        # return f"N°: {the_num:03d}/{year}"
+
+
 class WareHouseOrderItem(models.Model):
     order           = models.ForeignKey(WareHouseOrder, verbose_name="commande", on_delete=models.CASCADE, related_name="items")
     warehouse_item  = models.ForeignKey("inventory.WareHouseItem", verbose_name="produit", on_delete=models.CASCADE, related_name="warehouse_order_items")
@@ -62,6 +83,7 @@ class WareHouseOrderItem(models.Model):
     @property
     def get_warehouse(self):
         return warehouse_item.location
+
 
     # def get_absolute_url(self):
     #     return reverse("order:warehouse_order_item_detail", kwargs={"pk": self.pk}) 

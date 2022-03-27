@@ -55,10 +55,10 @@ class WareHouseOrderItemInline(admin.TabularInline):
 
 @admin.register(WareHouseOrder)
 class WareHouseOrderAdmin(ExportMixin, admin.ModelAdmin):
-    list_display = ['id', 'created' ,'updated' ,'order_type']
+    list_display = ['id', 'created' ,'updated' ,'order_type', 'is_confirmed']
     list_display_links =('id', )
     list_filter = ['order_type','created' ]
-    list_editable = ['order_type']
+    list_editable = ['order_type', 'is_confirmed']
     # search_fields = ('first_name','last_name','phone','email')
     exclude = ('campany',)
     inlines = [WareHouseOrderItemInline] 
